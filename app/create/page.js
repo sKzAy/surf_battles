@@ -35,12 +35,10 @@ const page = () => {
       // ^MAKING SURE ALL FIELDS ARE FILLED
       else{
         FieldGood = true
-        console.log(ModeRef.current.value)
         // In this else statement; making sure all filled fields are meaningful
         let validated_map_name = false
         validated_map_name = await fetchMap(MapRef.current.value)
         if (validated_map_name === true){
-          let mapName = MapRef.current.value
           MapGood = true
         }
         else{
@@ -129,29 +127,42 @@ const page = () => {
       
     }
     async function fetchMap(map){
-      try{
-        // Fetching the map from SH api
-        let data = await fetch(`https://surfheaven.eu/api/mapinfo/${map}`)
-        if (!data.ok){
-          console.log("map invalid")
-          return false
-        }
-        else{
-          return true
-        }
-        // If not ok, map invalid return false else return true
-      }
-      catch (error){
-        console.log("error")
+      try {
+        const response = await fetch(`https://surfheaven.eu/api/mapinfo/${map}`);
+        const data = await response.json();
+        console.log(data)
+       if (data.length !== 0){
+        return true
+       }
+       else{
         return false
-        // if error return false again
+       }
+      } 
+      catch (error) {
+       return false
       }
+      // try{
+      //   // Fetching the map from SH api
+      //   let data = ""
+      //   let response = ""
+      //    response = await fetch(`https://surfheaven.eu/api/mapinfo/${map}`)
+      //   if (!response.ok){
+      //     console.log("map invalid")
+      //      console.log(data)
+      //     return false
+      //   }
+      //   else if(response.ok ){
+      //     console.log(`ok data: ${data[0].map}`)
+      //     return true
+      //   }
+      
+        // If not ok, map invalid return false else return true
+      
     }
     async function fetchPlayer(id){
       try{
         let data = await fetch(`https://surfheaven.eu/api/playerinfo/${Number(id)}`)
       if (!data.ok){
-        console.log("player invalid")
         return false
       }
       else{
@@ -159,7 +170,6 @@ const page = () => {
       }
       }
       catch (error){
-        console.log(`player error ${error.message}`)
         return false
       }
     }
@@ -198,7 +208,7 @@ const page = () => {
         className='w-[20vw] p-1 rounded-xl mt-1'
         />
         <p ref={DurationErrorRef} className='opacity-0 w-fit mx-auto text-red-500 font-bold text-sm underline'>
-        Invalid time!
+        Invalid time, enter an integer between 5 and 60!
         </p>
         </div>
         <div>
