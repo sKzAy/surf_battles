@@ -59,10 +59,9 @@ const page = () => {
         // Now fetch player from steam id to see if valid
         try{
           let validated_player_id = false
-        let playerId = 0
         validated_player_id = await fetchPlayer(SteamRef.current.value)
         if(validated_player_id === true){
-          playerId = SteamRef.current.value
+         let playerId = SteamRef.current.value
           SteamGood = true
         }
         else{
@@ -111,14 +110,23 @@ const page = () => {
         }
       }
       if (FieldGood === true && SteamGood === true && MapGood === true && DurationGood === true ){
-       if(ModeRef.current.value === "option1"){
+        let formObject = {}
+        formObject = {
+            "steamid": SteamRef.current.value,
+            "map":MapRef.current.value,
+            "duration":DurationRef.current.value,
+            "mode": ModeRef.current.value
+        }
+        console.log(formObject)
+       if(ModeRef.current.value === "1v1"){
         router.push("/1v1")
        }
        else{
         router.push("/team")
        }
+       return(formObject)
       }
-
+      
     }
     async function fetchMap(map){
       try{
@@ -210,8 +218,8 @@ const page = () => {
         <div>
         <p htmlFor="dropdown" className='text-white font-bold text-xl mt-2'>Choose Mode:</p>
     <select ref={ModeRef} id="dropdown" name="options" className='mt-1'>
-        <option className='w-[10vw]' value="option1">1v1</option>
-        <option className='w-[10vw]' value="option2">Teams</option>
+        <option className='w-[10vw]' value="1v1">1v1</option>
+        <option className='w-[10vw]' value="team">Teams</option>
     </select>
         </div>
         <button className='text-lg text-center font-bold text-white bg-orange-700 rounded-xl border border-none p-1 mt-2' onClick={formEnter}>Submit</button>
