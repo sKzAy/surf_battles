@@ -5,8 +5,8 @@ const page = () => {
   return (
     <>
           
-          <h1 className='text-orange-700 text-9xl text-center pt-5 font-bold'>Surf_Battles</h1> 
-        <div className="page ">
+          <h1 data-aos="fade-down" className='text-orange-700 text-7xl text-center pt-5 font-bold'>Surf_Battles</h1> 
+        <div data-aos="fade-up" className="page ">
         <div className='text-white text-5xl mt-10 text-center font-bold'>
           <p>Team Mode</p>
           <p className='text-3xl text-left pl-5'>Lobby ID:</p>

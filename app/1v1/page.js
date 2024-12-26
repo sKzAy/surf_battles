@@ -6,14 +6,14 @@ const page = () => {
   return (
     <>
     
-        <h1 className='text-orange-700 text-9xl text-center pt-5 font-bold'>Surf_Battles</h1> 
-        <div className="page ">
+        <h1 data-aos="fade-down" className='text-orange-700 text-7xl text-center pt-5 font-bold'>Surf_Battles</h1> 
+        <div data-aos="fade-up" className="page ">
         <div className='text-white text-5xl mt-10 text-center font-bold'>
           <p>1v1 Mode</p>
           <p className='text-3xl text-left pl-5'>Lobby ID:</p>
         </div>
         <div className="players flex text-center align-middle justify-evenly mt-5">
-          <div className="p1">
+          <div data-aos="fade-up" className="p1">
             <div className="box w-fit h-fit p-12 bg-slate-900 border-none rounded-xl">
               <h1 className='text-orange-700 font-bold text-4xl text-center'>Player 1</h1>
               <div className="info">
@@ -26,10 +26,10 @@ const page = () => {
               </div>
             </div>
           </div>
-          <div>
+          <div data-aos="fade-up">
             <Timer/>
           </div>
-          <div className="p2">
+          <div data-aos="fade-up" className="p2">
             <div className="box w-fit h-fit p-12 bg-slate-900 border-none rounded-xl">
               <h1 className='text-orange-700 font-bold text-4xl text-center'>Player 2</h1>
               <div className="info">
