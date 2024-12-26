@@ -1,10 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
 
+
 const Landing = () => {
   return (
     <>
-       <h1 data-aos="fade-down" className=' text-7xl text-center pt-5 text-orange-700 font-bold'>Surf_Battles</h1>
+        <Link href="/"><h1 data-aos="fade-down" className='text-orange-700 text-7xl text-center pt-5 font-bold'>Surf_Battles</h1></Link>
         <div data-aos="fade-up" className='text-white text-5xl text-center mt-10 font-bold'>
             Choose:
         </div>

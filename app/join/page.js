@@ -1,6 +1,7 @@
 "use client"
 import React from 'react'
 import { useRef } from 'react'
+import Link from 'next/link'
 
 const page = () => {
     const LobbyRef = useRef()
@@ -52,7 +53,7 @@ const page = () => {
     }
   return (
     <>
-     <h1 data-aos="fade-down" className=' text-7xl text-center pt-5 text-orange-700 font-bold '>Surf_Battles</h1>
+      <Link href="/"><h1 data-aos="fade-down" className='text-orange-700 text-7xl text-center pt-5 font-bold'>Surf_Battles</h1></Link>
       <div data-aos="fade-up" className='text-center mt-5 bg-slate-800 h-fit w-fit p-8 mx-auto border-none rounded-2xl'>
       <form action="" method="post">
         <div>

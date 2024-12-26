@@ -1,11 +1,12 @@
 import React from 'react'
 import Timer from '@/components/Timer'
+import Link from 'next/link'
 
 const page = () => {
   return (
     <>
           
-          <h1 data-aos="fade-down" className='text-orange-700 text-7xl text-center pt-5 font-bold'>Surf_Battles</h1> 
+          <Link href="/"><h1 data-aos="fade-down" className='text-orange-700 text-7xl text-center pt-5 font-bold'>Surf_Battles</h1></Link> 
         <div data-aos="fade-up" className="page ">
         <div className='text-white text-5xl mt-10 text-center font-bold'>
           <p>Team Mode</p>
