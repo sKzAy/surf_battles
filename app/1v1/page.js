@@ -1,6 +1,7 @@
 "use client"
 import React from 'react'
 import { useRef, } from 'react'
+import Timer from '@/components/Timer'
 const page = () => {
   return (
     <>
@@ -24,6 +25,9 @@ const page = () => {
                 <p className='text-white text-lg font-bold text-left'>Hours played: too many</p>
               </div>
             </div>
+          </div>
+          <div>
+            <Timer/>
           </div>
           <div className="p2">
             <div className="box w-fit h-fit p-12 bg-slate-900 border-none rounded-xl">
