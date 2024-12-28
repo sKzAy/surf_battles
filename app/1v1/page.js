@@ -9,15 +9,15 @@ const page = () => {
   return (
     <>
     
-        <Link href="/"><h1 data-aos="fade-down" className='text-orange-700 text-7xl text-center pt-5 font-bold'>Surf_Battles</h1></Link>
+        <Link href="/"><h1 data-aos="fade-down" className='text-orange-700 text-7xl text-center pt-5 font-bold max-md:text-5xl'>Surf_Battles</h1></Link>
         <div data-aos="fade-up" className="page ">
-        <div className='text-white text-5xl mt-10 text-center font-bold'>
+        <div className='text-white text-5xl mt-10 text-center font-bold max-md:text-3xl'>
           <p>1v1 Mode</p>
-          <p className='text-3xl text-left pl-5'>Lobby ID:</p>
+          <p className='text-3xl text-left pl-5 max-md:text-xl'>Lobby ID:</p>
         </div>
-        <div className="players flex text-center align-middle justify-evenly mt-5">
+        <div className="players flex text-center align-middle justify-evenly mt-5 max-md:flex-col max-md:mx-auto">
           <div data-aos="fade-up" className="p1">
-            <div className="box w-fit h-fit p-12 bg-slate-900 border-none rounded-xl">
+            <div className="box w-fit h-fit p-12 bg-slate-900 border-none rounded-xl  max-md:mx-auto">
               <h1 className='text-orange-700 font-bold text-4xl text-center'>Player 1</h1>
               <div className="info">
                 <p className='text-white text-lg font-bold text-left'>username: meow</p>
@@ -33,11 +33,11 @@ const page = () => {
               </div>
             </div>
           </div>
-          <div data-aos="fade-up">
+          <div className='max-md:m-3' data-aos="fade-up">
             <Timer/>
           </div>
           <div data-aos="fade-up" className="p2">
-            <div className="box w-fit h-fit p-12 bg-slate-900 border-none rounded-xl">
+            <div className="box w-fit h-fit p-12 bg-slate-900 border-none rounded-xl max-md:mx-auto">
               <h1 className='text-orange-700 font-bold text-4xl text-center'>Player 2</h1>
               <div className="info">
                 <p className='text-white text-lg font-bold text-left'>username: meow2</p>

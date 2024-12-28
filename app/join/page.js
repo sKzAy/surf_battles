@@ -53,7 +53,7 @@ const page = () => {
     }
   return (
     <>
-      <Link href="/"><h1 data-aos="fade-down" className='text-orange-700 text-7xl text-center pt-5 font-bold'>Surf_Battles</h1></Link>
+      <Link href="/"><h1 data-aos="fade-down" className='text-orange-700 text-7xl text-center pt-5 font-bold max-md:text-5xl'>Surf_Battles</h1></Link>
       <div data-aos="fade-up" className='text-center mt-5 bg-slate-800 h-fit w-fit p-8 mx-auto border-none rounded-2xl'>
       <form action="" method="post">
         <div>
@@ -63,13 +63,13 @@ const page = () => {
         required
         type="text"
         placeholder = "eg: 921269561"
-        className='w-[20vw] p-1 rounded-xl mt-1'
+        className='w-[20vw] p-1 rounded-xl mt-1 max-md:w-[65vw]'
         key="steamid"
         />
         <p ref={SteamErrorRef} className='opacity-0 w-fit mx-auto text-red-500 font-bold text-sm underline'>
         Invalid Steam ID3!
         </p>
-        <p className='text-white text-sm w-[25vw] mx-auto'>The numbers at the end of your surfheaven profile link is your steam ID3, for example in this profile: https://surfheaven.eu/player/921269561
+        <p className='text-white text-sm w-[25vw] mx-auto max-md:w-[60vw]'>The numbers at the end of your surfheaven profile link is your steam ID3, for example in this profile: https://surfheaven.eu/player/921269561
             the &apos;921269561&apos; part is the steam id 3 </p>
         </div>
         <div>
@@ -79,7 +79,7 @@ const page = () => {
         required
         type="text"
         placeholder = "idk rn"
-        className='w-[20vw] p-1 rounded-xl mt-1'
+        className='w-[20vw] p-1 rounded-xl mt-1 max-md:w-[65vw]'
         key="lobbycode"
         />
         </div>
