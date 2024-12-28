@@ -1,9 +1,11 @@
 "use client"
 import React from 'react'
-import { useRef, } from 'react'
+import { useRef,useState } from 'react'
 import Timer from '@/components/Timer'
 import Link from 'next/link'
 const page = () => {
+  const [player1time,setPlayer1Time] = useState("1:00")
+  const [player2time,setPlayer2Time] = useState("0:59")
   return (
     <>
     
@@ -21,9 +23,13 @@ const page = () => {
                 <p className='text-white text-lg font-bold text-left'>username: meow</p>
                 <p className='text-white text-lg font-bold text-left'>Surfheaven profile: 433244334</p>
                 <p className='text-white text-lg font-bold text-left'>Rank: 69</p>
-                <p className='text-white text-lg font-bold text-left'>Rank name: goat</p>
-                <p className='text-white text-lg font-bold text-left'>Points: 69420</p>
                 <p className='text-white text-lg font-bold text-left'>Hours played: too many</p>
+              </div>
+              <div className="status ">
+                <p className='text-2xl text-orange-700 font-bold '>Match Status</p>
+                <p className='text-white text-lg font-bold text-left'>Time set: {player1time}</p>
+                <p className='text-white text-lg font-bold text-left'>Current Standing: {player1time==player2time? <span className='text-green-500'>Draw</span>: player1time < player2time ? <span className='text-green-500'>Leading
+                </span>:<span className='text-red-600'>Trailing</span>}</p>
               </div>
             </div>
           </div>
@@ -37,9 +43,13 @@ const page = () => {
                 <p className='text-white text-lg font-bold text-left'>username: meow2</p>
                 <p className='text-white text-lg font-bold text-left'>Surfheaven profile: 355555</p>
                 <p className='text-white text-lg font-bold text-left'>Rank: 96</p>
-                <p className='text-white text-lg font-bold text-left'>Rank name:taog</p>
-                <p className='text-white text-lg font-bold text-left'>Points: 42069</p>
                 <p className='text-white text-lg font-bold text-left'>Hours played: way too many</p>
+              </div>
+              <div className="status ">
+                <p className='text-2xl text-orange-700 font-bold '>Match Status</p>
+                <p className='text-white text-lg font-bold text-left'>Time set: {player2time}</p>
+                <p className='text-white text-lg font-bold text-left'>Current Standing: {player1time==player2time? <span className='text-green-500'>Draw</span>:player2time < player1time ? <span className='text-green-500'>Leading
+                </span>:<span className='text-red-600'>Trailing</span>}</p>
               </div>
             </div>
           </div>
