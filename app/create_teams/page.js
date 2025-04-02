@@ -8,15 +8,18 @@ const page = () => {
   // ROUTER
   const router = useRouter()
   // INITIALIZING REFS
-    const SteamRef = useRef()
+    const FirstSteamRef = useRef()
+    const SecondSteamRef = useRef()
+    const FirstSteamOppRef = useRef()
+    const SecondSteamOppRef = useRef()
     const MapRef = useRef()
     const DurationRef = useRef()
-    const ModeRef = useRef()
     // ERRORS
     const FieldRef = useRef()
     const MapErrorRef = useRef()
     const DurationErrorRef = useRef()
     const SteamErrorRef = useRef()
+    const SteamOppErrorRef = useRef()
     // WHEN USER HITS SUBMIT BUTTON
     async function formEnter (e) {
       let FieldGood = false
@@ -24,7 +27,7 @@ const page = () => {
       let SteamGood = false
       let DurationGood = false
       e.preventDefault()
-      if (SteamRef.current.value == "" || MapRef.current.value == ""|| DurationRef.current.value== "" || ModeRef.current.value== ""){
+      if (FirstSteamRef.current.value == "" || SecondSteamRef.current.value == "" ||FirstSteamOppRef.current.value == "" ||SecondSteamOppRef.current.value == "" || MapRef.current.value == ""|| DurationRef.current.value== ""){
          // this just pops up the error for 5 seconds
         FieldRef.current.classList.add("transition-opacity")
         FieldRef.current.classList.add("duration-500")
@@ -58,9 +61,15 @@ const page = () => {
         // Now fetch player from steam id to see if valid
         try{
           let validated_player_id = false
-        validated_player_id = await fetchPlayer(SteamRef.current.value)
-        if(validated_player_id === true){
-         let playerId = SteamRef.current.value
+          let validated_player2_id = false
+          let validated_opp_id = false
+          let validated_opp2_id = false
+        validated_player_id = await fetchPlayer(FirstSteamRef.current.value)
+        validated_player2_id = await fetchPlayer(SecondSteamRef.current.value)
+        validated_opp_id = await fetchPlayer(FirstSteamOppRef.current.value)
+        validated_opp2_id = await fetchPlayer(SecondSteamOppRef.current.value)
+        console.log(validated_player_id,validated_player2_id,validated_opp_id,validated_opp2_id)
+        if(validated_player_id === true && validated_player2_id === true && validated_opp_id === true && validated_opp2_id === true && FirstSteamRef.current.value !== SecondSteamRef.current.value && FirstSteamRef.current.value !== FirstSteamOppRef.current.value && FirstSteamRef.current.value !== SecondSteamOppRef && SecondSteamRef !== FirstSteamOppRef && SecondSteamRef !== SecondSteamOppRef && FirstSteamOppRef !== SecondSteamOppRef ){
           SteamGood = true
         }
         else{
@@ -111,18 +120,22 @@ const page = () => {
       if (FieldGood === true && SteamGood === true && MapGood === true && DurationGood === true ){
         let formObject = {}
         formObject = {
-            "steamid": SteamRef.current.value,
+            "teams":[
+              {
+                "name":"team1",
+                "ids": [FirstSteamRef.current.value,SecondSteamRef.current.value]
+              },
+              {
+                "name":"team2",
+                "ids":[FirstSteamOppRef.current.value,SecondSteamOppRef.current.value]
+              }
+            ],
             "map":MapRef.current.value,
             "duration":DurationRef.current.value,
-            "mode": ModeRef.current.value
+            "mode": "teams"
         }
         console.log(formObject)
-       if(ModeRef.current.value === "1v1"){
-        router.push("/1v1")
-       }
-       else{
-        router.push("/team")
-       }
+       router.push("/team")
        return(formObject)
       }
       
@@ -142,22 +155,6 @@ const page = () => {
       catch (error) {
        return false
       }
-      // try{
-      //   // Fetching the map from SH api
-      //   let data = ""
-      //   let response = ""
-      //    response = await fetch(`https://surfheaven.eu/api/mapinfo/${map}`)
-      //   if (!response.ok){
-      //     console.log("map invalid")
-      //      console.log(data)
-      //     return false
-      //   }
-      //   else if(response.ok ){
-      //     console.log(`ok data: ${data[0].map}`)
-      //     return true
-      //   }
-      
-        // If not ok, map invalid return false else return true
       
     }
     async function fetchPlayer(id){
@@ -183,20 +180,50 @@ const page = () => {
    <p ref={FieldRef} className='opacity-0 w-fit mx-auto text-red-500 font-bold text-sm underline'>
         Enter all fields!
     </p>
-        <p htmlFor="steamid" className='text-white font-bold text-xl'>Steam ID3</p>
+        <p htmlFor="steamid" className='text-white font-bold text-xl'>Your Team's Steam ID3</p>
         <input 
-        ref={SteamRef}
+        ref={FirstSteamRef}
         required
         type="text"
         placeholder = "eg: 921269561"
         className='w-[20vw] p-1 rounded-xl mt-1 max-md:w-[65vw]'
         key="steamid"
         />
+        <input 
+        ref={SecondSteamRef}
+        required
+        type="text"
+        placeholder = "eg: 921269561"
+        className='w-[20vw] p-1 rounded-xl mt-1 max-md:w-[65vw]'
+        key="steamid2"
+        />
          <p ref={SteamErrorRef} className='opacity-0 w-fit mx-auto text-red-500 font-bold text-sm underline'>
         Invalid Steam ID3!
         </p>
         <p className='text-white text-sm w-[25vw] mx-auto max-md:w-[60vw]'>The numbers at the end of your surfheaven profile link is your steam ID3, for example in this profile: https://surfheaven.eu/player/921269561
-            the &apos;921269561&apos; part is the steam ID3 </p>
+            the &apos;921269561&apos; part is the steam ID3 that you need to enter.</p>
+        </div>
+        <div>
+        <p htmlFor="steamid" className='text-white font-bold text-xl'>Opponent's Steam ID3</p>
+        <input 
+        ref={FirstSteamOppRef}
+        required
+        type="text"
+        placeholder = "eg: 921269561"
+        className='w-[20vw] p-1 rounded-xl mt-1 max-md:w-[65vw]'
+        key="oppsteamid"
+        />
+        <input 
+        ref={SecondSteamOppRef}
+        required
+        type="text"
+        placeholder = "eg: 921269561"
+        className='w-[20vw] p-1 rounded-xl mt-1 max-md:w-[65vw]'
+        key="oppsteamid2"
+        />
+         <p ref={SteamOppErrorRef} className='opacity-0 w-fit mx-auto text-red-500 font-bold text-sm underline'>
+        Either invalid id, or both the ids are same!
+        </p>
         </div>
         <div className='mt-1'>
         <p className='text-white font-bold text-xl' htmlFor="duration">Time per round</p>
@@ -226,13 +253,13 @@ const page = () => {
         Invalid map name!
         </p>
         </div>
-        <div>
+        {/* <div>
         <p htmlFor="dropdown" className='text-white font-bold text-xl mt-2'>Choose Mode:</p>
     <select ref={ModeRef} id="dropdown" name="options" className='mt-1'>
         <option className='w-[10vw]' value="1v1">1v1</option>
         <option className='w-[10vw]' value="team">Teams</option>
     </select>
-        </div>
+        </div> */}
         <button className='text-lg text-center font-bold text-white bg-orange-700 rounded-xl border border-none p-1 mt-2' onClick={formEnter}>Submit</button>
       </form>
       </div>

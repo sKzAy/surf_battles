@@ -10,8 +10,8 @@ const Landing = () => {
             Choose:
         </div>
         <div data-aos="fade-up" className='flex flex-col text-center gap-2 mt-10'>
-            <Link href="/create"><button className='text-orange-700 text-3xl font-semibold rounded-xl p-2 text-center hover:transition-transform transition-transform hover:border-orange-700 hover:border hover:scale-105 max-md:text-2xl'  >Create Lobby</button></Link>
-            <Link href="/join"><button className='text-orange-700 text-3xl font-semibold rounded-xl p-2 text-center hover:transition-transform transition-transform hover:border-orange-700 hover:border hover:scale-105 max-md:text-2xl'>Join Lobby</button></Link>
+            <Link href="/create_1v1"><button className='text-orange-700 text-3xl font-semibold rounded-xl p-2 text-center hover:transition-transform transition-transform hover:border-orange-700 hover:border hover:scale-105 max-md:text-2xl'  >Create 1v1 Lobby</button></Link>
+            <Link href="/create_teams"><button className='text-orange-700 text-3xl font-semibold rounded-xl p-2 text-center hover:transition-transform transition-transform hover:border-orange-700 hover:border hover:scale-105 max-md:text-2xl'>Create Teams Lobby</button></Link>
         </div> 
     </>
   )
