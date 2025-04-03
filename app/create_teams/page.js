@@ -102,7 +102,7 @@ const page = () => {
         validated_opp_id = await fetchPlayer(FirstSteamOppRef.current.value)
         validated_opp2_id = await fetchPlayer(SecondSteamOppRef.current.value)
         console.log(validated_player_id,validated_player2_id,validated_opp_id,validated_opp2_id)
-        if(validated_player_id === true && validated_player2_id === true && validated_opp_id === true && validated_opp2_id === true && FirstSteamRef.current.value !== SecondSteamRef.current.value && FirstSteamRef.current.value !== FirstSteamOppRef.current.value && FirstSteamRef.current.value !== SecondSteamOppRef && SecondSteamRef !== FirstSteamOppRef && SecondSteamRef !== SecondSteamOppRef && FirstSteamOppRef !== SecondSteamOppRef ){
+        if(validated_player_id === true && validated_player2_id === true && validated_opp_id === true && validated_opp2_id === true && FirstSteamRef.current.value !== SecondSteamRef.current.value && FirstSteamRef.current.value !== FirstSteamOppRef.current.value && FirstSteamRef.current.value !== SecondSteamOppRef.current.value && SecondSteamRef.current.value !== FirstSteamOppRef.current.value && SecondSteamRef.current.value !== SecondSteamOppRef.current.value && FirstSteamOppRef.current.value !== SecondSteamOppRef.current.value ){
           SteamGood = true
         }
         else{
@@ -169,6 +169,7 @@ const page = () => {
             "zone": MapZoneRef.current.value
         }
         console.log(formObject)
+        postData(formObject)
        router.push("/team")
        return(formObject)
       }
@@ -223,6 +224,22 @@ const page = () => {
       return false
     }
   }
+  const postData = async (object) => {
+    try {
+      const response = await fetch('https://shduels.toasti.net/api/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify([object]),
+      });
+  
+      const data = await response.json();
+      console.log('Response:', data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   return (
     <>
    <Link href="/"><h1 data-aos="fade-down" className='text-orange-700 text-7xl text-center pt-5 font-bold max-md:text-5xl'>Surf_Battles</h1></Link>
@@ -232,6 +249,9 @@ const page = () => {
    <p ref={FieldRef} className='opacity-0 w-fit mx-auto text-red-500 font-bold text-sm underline'>
         Enter all fields!
     </p>
+    <p ref={SteamErrorRef} className='opacity-0 w-fit mx-auto text-red-500 font-bold text-sm underline'>
+        Invalid Steam ID3 or same Steam ID3
+        </p>
         <p htmlFor="steamid" className='text-white font-bold text-xl'>Your Team's Steam ID3</p>
         <input 
         ref={FirstSteamRef}
@@ -250,9 +270,7 @@ const page = () => {
         className='w-[20vw] p-1 rounded-xl mt-1 max-md:w-[65vw]'
         key="steamid2"
         />
-         <p ref={SteamErrorRef} className='opacity-0 w-fit mx-auto text-red-500 font-bold text-sm underline'>
-        Invalid Steam ID3!
-        </p>
+        
         <p className='text-white text-sm w-[25vw] mx-auto max-md:w-[60vw]'>The numbers at the end of your surfheaven profile link is your steam ID3, for example in this profile: https://surfheaven.eu/player/921269561
             the &apos;921269561&apos; part is the steam ID3 that you need to enter.</p>
         </div>

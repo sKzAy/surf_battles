@@ -176,6 +176,7 @@ const page = () => {
             "zone": MapZoneRef.current.value
         }
         console.log(formObject)
+        postData(formObject)
        router.push("/1v1")
        return(formObject)
       }
@@ -213,6 +214,23 @@ const page = () => {
         return false
       }
     }
+    const postData = async (object) => {
+      try {
+        const response = await fetch('https://shduels.toasti.net/api/addmatch', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify([object]),
+        });
+    
+        const data = await response.json();
+        console.log('Response:', data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    
     
   return (
     <>
@@ -222,7 +240,11 @@ const page = () => {
         <div>
    <p ref={FieldRef} className='opacity-0 w-fit mx-auto text-red-500 font-bold text-sm underline'>
         Enter all fields!
+        </p>
+    <p ref={SteamErrorRef} className='opacity-0 w-fit mx-auto text-red-500 font-bold text-sm underline'>
+         Either invalid id, or both the ids are same!
     </p>
+    
         <p htmlFor="steamid" className='text-white font-bold text-xl'>Your Steam ID3</p>
         <input 
         ref={SteamRef}
@@ -232,9 +254,7 @@ const page = () => {
         className='w-[20vw] p-1 rounded-xl mt-1 max-md:w-[65vw]'
         key="steamid"
         />
-         <p ref={SteamErrorRef} className='opacity-0 w-fit mx-auto text-red-500 font-bold text-sm underline'>
-        Invalid Steam ID3!
-        </p>
+         
         <p className='text-white text-sm w-[25vw] mx-auto max-md:w-[60vw]'>The numbers at the end of your surfheaven profile link is your steam ID3, for example in this profile: https://surfheaven.eu/player/921269561
             the &apos;921269561&apos; part is the steam ID3 that you need to enter.</p>
         </div>
