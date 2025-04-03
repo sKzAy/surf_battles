@@ -19,16 +19,20 @@ const page = () => {
     const DurationErrorRef = useRef()
     const SteamErrorRef = useRef()
     const SteamOppErrorRef = useRef()
+    const MapZoneErrorRef = useRef()
+
     async function fetchBonus(map){
       try{
         let data = await fetch(`https://surfheaven.eu/api/mapinfo/${map}`)
-        if(!data.ok){
-        return false
+        if(data.ok){
+          let data2 = await fetch(`https://surfheaven.eu/api/mapinfo/${map}`)
+          let contents = await data2.json()
+          let numberOfBonuses = contents[0].bonus
+          console.log(numberOfBonuses)
+          return numberOfBonuses
       }
         else{
-          let contents = await data.json()
-          let numberOfBonuses = contents[0].bonus
-          return numberOfBonuses
+          return -1
         }
     }
     catch(error){
@@ -37,12 +41,14 @@ const page = () => {
   }
     // WHEN USER HITS SUBMIT BUTTON
     async function formEnter (e) {
+      let zoneGood = false
       let FieldGood = false
       let MapGood = false
       let SteamGood = false
       let DurationGood = false
       e.preventDefault()
-      if (SteamRef.current.value == "" || MapRef.current.value == ""|| DurationRef.current.value== ""){
+
+      if (SteamRef.current.value == "" || MapRef.current.value == ""|| DurationRef.current.value== "" || SteamOppRef.current.value == "" || MapZoneRef.current.value == ""){
          // this just pops up the error for 5 seconds
         FieldRef.current.classList.add("transition-opacity")
         FieldRef.current.classList.add("duration-500")
@@ -59,14 +65,6 @@ const page = () => {
         validated_map_name = await fetchMap(MapRef.current.value)
         if (validated_map_name === true){
           MapGood = true
-          let numberOfBones = fetchBonus(MapRef.current.value)
-          if(Number(MapZoneRef.current.value) < 0 || Number(MapZoneRef.current.value) > numberOfBones){
-            var zoneGood = false
-          }
-          else{
-             var validBonus = MapZoneRef.current.value
-             var zoneGood = true
-          }
         }
         else{
            // this just pops up the error for 5 seconds
@@ -76,14 +74,38 @@ const page = () => {
           setTimeout(()=>{
           MapErrorRef.current.classList.add("opacity-0")
           },5000)
-
+        }
+        try{
+          let numberOfBones = 0
+          let enteredZone = MapZoneRef.current.value
+          numberOfBones = await fetchBonus(MapRef.current.value)
+          if(enteredZone < 0 || enteredZone > numberOfBones || isNaN(enteredZone) === true){
+            MapZoneErrorRef.current.classList.add("transition-opacity")
+            MapZoneErrorRef.current.classList.add("duration-500")
+            MapZoneErrorRef.current.classList.remove("opacity-0")
+            setTimeout(()=>{
+            MapZoneErrorRef.current.classList.add("opacity-0")
+            },5000)
+          }
+          else{
+            zoneGood = true
+          }
+        }
+        catch(error){
+          MapZoneErrorRef.current.classList.add("transition-opacity")
+            MapZoneErrorRef.current.classList.add("duration-500")
+            MapZoneErrorRef.current.classList.remove("opacity-0")
+            setTimeout(()=>{
+            MapZoneErrorRef.current.classList.add("opacity-0")
+            },5000)
         }
         
-        
+
         // ^ fetching map from surfheaven api to check if its good or nah
         // -  
         // -
         // Now fetch player from steam id to see if valid
+
         try{
           let validated_player_id = false
           let validated_opp_id = false
@@ -151,7 +173,7 @@ const page = () => {
             "map":MapRef.current.value,
             "duration":DurationRef.current.value,
             "mode": "1v1",
-            "zone": validBonus
+            "zone": MapZoneRef.current.value
         }
         console.log(formObject)
        router.push("/1v1")
@@ -269,6 +291,9 @@ const page = () => {
         className='w-[20vw] p-1 rounded-xl mt-1 max-md:w-[65vw]'
         />
         <br />
+        <p ref={MapZoneErrorRef} className='opacity-0 w-fit mx-auto text-red-500 font-bold text-sm underline'>
+          Invalid zone.
+        </p>
         {/* <div>
         <p htmlFor="dropdown" className='text-white font-bold text-xl mt-2'>Choose Mode:</p>
     <select ref={ModeRef} id="dropdown" name="options" className='mt-1'>

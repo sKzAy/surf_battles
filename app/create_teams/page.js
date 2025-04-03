@@ -13,6 +13,7 @@ const page = () => {
     const FirstSteamOppRef = useRef()
     const SecondSteamOppRef = useRef()
     const MapRef = useRef()
+     const MapZoneRef = useRef()
     const DurationRef = useRef()
     // ERRORS
     const FieldRef = useRef()
@@ -20,8 +21,10 @@ const page = () => {
     const DurationErrorRef = useRef()
     const SteamErrorRef = useRef()
     const SteamOppErrorRef = useRef()
+    const MapZoneErrorRef = useRef()
     // WHEN USER HITS SUBMIT BUTTON
     async function formEnter (e) {
+      let zoneGood = false
       let FieldGood = false
       let MapGood = false
       let SteamGood = false
@@ -55,10 +58,40 @@ const page = () => {
           },5000)
 
         }
+        
         // ^ fetching map from surfheaven api to check if its good or nah
         // -  
         // -
+        try{
+          let numberOfBones = 0
+          let enteredZone = MapZoneRef.current.value
+          numberOfBones = await fetchBonus(MapRef.current.value)
+          if(enteredZone < 0 || enteredZone > numberOfBones || isNaN(enteredZone) === true){
+            MapZoneErrorRef.current.classList.add("transition-opacity")
+            MapZoneErrorRef.current.classList.add("duration-500")
+            MapZoneErrorRef.current.classList.remove("opacity-0")
+            setTimeout(()=>{
+            MapZoneErrorRef.current.classList.add("opacity-0")
+            },5000)
+          }
+          else{
+            zoneGood = true
+          }
+        }
+        catch(error){
+          MapZoneErrorRef.current.classList.add("transition-opacity")
+            MapZoneErrorRef.current.classList.add("duration-500")
+            MapZoneErrorRef.current.classList.remove("opacity-0")
+            setTimeout(()=>{
+            MapZoneErrorRef.current.classList.add("opacity-0")
+            },5000)
+        }
+
+
+        //
         // Now fetch player from steam id to see if valid
+
+
         try{
           let validated_player_id = false
           let validated_player2_id = false
@@ -117,7 +150,7 @@ const page = () => {
           console.log(error.message)
         }
       }
-      if (FieldGood === true && SteamGood === true && MapGood === true && DurationGood === true ){
+      if (FieldGood === true && SteamGood === true && MapGood === true && DurationGood === true  && zoneGood === true  ){
         let formObject = {}
         formObject = {
             "teams":[
@@ -132,7 +165,8 @@ const page = () => {
             ],
             "map":MapRef.current.value,
             "duration":DurationRef.current.value,
-            "mode": "teams"
+            "mode": "teams",
+            "zone": MapZoneRef.current.value
         }
         console.log(formObject)
        router.push("/team")
@@ -171,6 +205,24 @@ const page = () => {
         return false
       }
     }
+    async function fetchBonus(map){
+      try{
+        let data = await fetch(`https://surfheaven.eu/api/mapinfo/${map}`)
+        if(data.ok){
+          let data2 = await fetch(`https://surfheaven.eu/api/mapinfo/${map}`)
+          let contents = await data2.json()
+          let numberOfBonuses = contents[0].bonus
+          console.log(numberOfBonuses)
+          return numberOfBonuses
+      }
+        else{
+          return -1
+        }
+    }
+    catch(error){
+      return false
+    }
+  }
   return (
     <>
    <Link href="/"><h1 data-aos="fade-down" className='text-orange-700 text-7xl text-center pt-5 font-bold max-md:text-5xl'>Surf_Battles</h1></Link>
@@ -189,6 +241,7 @@ const page = () => {
         className='w-[20vw] p-1 rounded-xl mt-1 max-md:w-[65vw]'
         key="steamid"
         />
+        <br />
         <input 
         ref={SecondSteamRef}
         required
@@ -213,6 +266,7 @@ const page = () => {
         className='w-[20vw] p-1 rounded-xl mt-1 max-md:w-[65vw]'
         key="oppsteamid"
         />
+        <br />
         <input 
         ref={SecondSteamOppRef}
         required
@@ -251,6 +305,20 @@ const page = () => {
         />
         <p ref={MapErrorRef} className='opacity-0 w-fit mx-auto text-red-500 font-bold text-sm underline'>
         Invalid map name!
+        </p>
+        <p className='text-white font-bold text-xl mt-1' htmlFor="duration">Enter zone:</p>
+        <p className='text-white text-sm w-[25vw] mx-auto max-md:w-[60vw]'>enter &quot;0&quot; if you want to race on the map, else enter the bonus number,eg for bonus 3 just type in &quot;3&quot;</p>
+        <input 
+        required
+        ref={MapZoneRef}
+        type="text"
+        key = "mapzone"
+        placeholder='eg: 4 (for bonus 4)'
+        className='w-[20vw] p-1 rounded-xl mt-1 max-md:w-[65vw]'
+        />
+        <br />
+        <p ref={MapZoneErrorRef} className='opacity-0 w-fit mx-auto text-red-500 font-bold text-sm underline'>
+          Invalid zone.
         </p>
         </div>
         {/* <div>
