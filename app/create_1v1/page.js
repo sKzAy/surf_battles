@@ -3,6 +3,8 @@ import React from 'react'
 import { useRef,} from 'react'
 import {useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useState } from 'react';
+import axios from 'axios';
 
 const page = () => {
   // ROUTER
@@ -172,15 +174,22 @@ const page = () => {
           }],
             "map":MapRef.current.value,
             "duration":DurationRef.current.value,
-            "mode": "1v1",
             "zone": MapZoneRef.current.value
         }
         console.log(formObject)
-        postData(formObject)
+        
+        const response = await fetch("https://shduels.toasti.net/api/addmatch", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(formObject),
+        });
+        console.log(response)
        router.push("/1v1")
-       return(formObject)
       }
-      
+
+
     }
     async function fetchMap(map){
       try {
@@ -214,23 +223,8 @@ const page = () => {
         return false
       }
     }
-    const postData = async (object) => {
-      try {
-        const response = await fetch('https://shduels.toasti.net/api/addmatch', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify([object]),
-        });
-    
-        const data = await response.json();
-        console.log('Response:', data);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-    
+
+      
     
   return (
     <>
