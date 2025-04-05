@@ -156,17 +156,17 @@ const page = () => {
             "teams":[
               {
                 "name":"team1",
-                "ids": [FirstSteamRef.current.value,SecondSteamRef.current.value]
+                "players": [FirstSteamRef.current.value,SecondSteamRef.current.value]
               },
               {
                 "name":"team2",
-                "ids":[FirstSteamOppRef.current.value,SecondSteamOppRef.current.value]
+                "players":[FirstSteamOppRef.current.value,SecondSteamOppRef.current.value]
               }
             ],
             "map":MapRef.current.value,
-            "duration":DurationRef.current.value,
+            "duration":Number(DurationRef.current.value),
             "mode": "teams",
-            "zone": MapZoneRef.current.value
+            "zone": Number(MapZoneRef.current.value)
         }
         console.log(formObject)
         postData(formObject)

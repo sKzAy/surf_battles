@@ -166,15 +166,15 @@ const page = () => {
         formObject = {
             "teams":[{
               "name":"team1",
-              "id":[SteamRef.current.value]
+              "players":[SteamRef.current.value]
             },
           {
             "name":"team2",
-            "id":[SteamOppRef.current.value]
+            "players":[SteamOppRef.current.value]
           }],
             "map":MapRef.current.value,
-            "duration":DurationRef.current.value,
-            "zone": MapZoneRef.current.value
+            "duration":Number(DurationRef.current.value),
+            "zone": Number(MapZoneRef.current.value)
         }
         console.log(formObject)
         
@@ -186,6 +186,7 @@ const page = () => {
           body: JSON.stringify(formObject),
         });
         console.log(response)
+        
        router.push("/1v1")
       }
 
