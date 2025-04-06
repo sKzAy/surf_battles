@@ -188,10 +188,7 @@ const page = () => {
         });
         const data = await response.json()
         console.log(data.id)
-        router.push({
-          pathname: `/posts/${data}`,
-          query: { id: data.id }},)
-      }
+        router.push(`/1v1/${data.id}`)
 
 
     }
