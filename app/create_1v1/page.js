@@ -178,7 +178,7 @@ const page = () => {
             "zone": Number(MapZoneRef.current.value)
         }
         console.log(formObject)
-
+        
         const response = await fetch("https://shduels.toasti.net/api/addmatch", {
           method: "POST",
           headers: {
@@ -188,7 +188,8 @@ const page = () => {
         });
         const data = await response.json()
         console.log(data.id)
-        router.push(`/1v1/${data.id}`)
+        router.push(`1v1/${data.id}`)
+      }
 
 
     }
