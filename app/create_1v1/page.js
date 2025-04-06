@@ -43,6 +43,7 @@ const page = () => {
   }
     // WHEN USER HITS SUBMIT BUTTON
     async function formEnter (e) {
+      let text
       let zoneGood = false
       let FieldGood = false
       let MapGood = false
@@ -177,7 +178,7 @@ const page = () => {
             "zone": Number(MapZoneRef.current.value)
         }
         console.log(formObject)
-        
+
         const response = await fetch("https://shduels.toasti.net/api/addmatch", {
           method: "POST",
           headers: {
@@ -185,9 +186,11 @@ const page = () => {
           },
           body: JSON.stringify(formObject),
         });
-        console.log(response)
-        
-       router.push("/1v1")
+        const data = await response.json()
+        console.log(data.id)
+        router.push({
+          pathname: `/posts/${data}`,
+          query: { id: data.id }},)
       }
 
 
